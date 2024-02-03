@@ -4,11 +4,11 @@ const port = 5000
 const app = express();
 let cors = require('cors')
 
-app.use(cors())
-app.use(express.json())
+
 //  SQLite database
 const db = new sqlite3.Database('./dua_main.sqlite');
-
+app.use(cors())
+app.use(express.json())
 // Endpoint to get all categories
 app.get('/categories', (req, res) => {
   db.all('SELECT * FROM category', (err, rows) => {
