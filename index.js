@@ -13,7 +13,7 @@ const db = new sqlite3.Database('./dua_main.sqlite');
 app.get('/categories', (req, res) => {
   db.all('SELECT * FROM category', (err, rows) => {
     if (err) {
-      res.status(500).send({error: err});
+      res.status(500).send({ error: err });
     }
     res.status(200).json(rows);
   });
@@ -25,7 +25,7 @@ app.get('/categories/:categoryId/subcategories', (req, res) => {
 
   db.all('SELECT * FROM sub_category WHERE cat_id = ?', [catId], (err, rows) => {
     if (err) {
-      return res.status(500).send({error: err});
+      return res.status(500).send({ error: err });
     }
 
     res.status(200).json(rows);
@@ -36,21 +36,22 @@ app.get('/categories/:categoryId/subcategories', (req, res) => {
 // Endpoint for all dua's
 app.get('/subcategories/:subcategoryId/duas', (req, res) => {
   db.all(`SELECT * FROM dua WHERE subcat_id = ${req.params.subcategoryId}`, (err, rows) => {
-     if (err) {
-       res.status(500).send({error: err});
-     }
-     res.status(200).json(rows);
+    if (err) {
+      res.status(500).send({ error: err });
+    }
+    res.status(200).json(rows);
   });
 });
+//not used
 app.get('/categories/:categoryId/dua', (req, res) => {
   const catId = req.params.categoryId;
 
-  db.all(`SELECT * FROM dua WHERE cat_id = ${req.params.categoryId}`,(err, rows) => {
+  db.all(`SELECT * FROM dua WHERE cat_id = ${req.params.categoryId}`, (err, rows) => {
     if (err) {
       return res.status(500).send(err);
     }
 
-    if(!rows) {
+    if (!rows) {
       return res.status(404).send('Dua not found');
     }
 
@@ -60,8 +61,8 @@ app.get('/categories/:categoryId/dua', (req, res) => {
 
 });
 
-app.get('/',  (req , res)  => {
-res.send('Dua started..')
+app.get('/', (req, res) => {
+  res.send('Dua started..')
 })
 
 // Start express server
